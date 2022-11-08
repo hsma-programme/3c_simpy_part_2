@@ -34,6 +34,7 @@ class GP_Surgery_Model:
     # attribute storing the run number, which gets passed in to the instance
     # of the class when it's instantiated, and an attribute to store the mean
     # queuing time for the nurse across patients in this run of the model.
+    """1"""
     def __init__(self, run_number):
         self.env = simpy.Environment()
         self.patient_counter = 0
@@ -44,6 +45,7 @@ class GP_Surgery_Model:
         
         self.mean_q_time_nurse = 0
         
+        """2"""
         self.results_df = pd.DataFrame()
         self.results_df["P_ID"] = []
         self.results_df["Start_Q_Nurse"] = []
@@ -111,12 +113,14 @@ class GP_Surgery_Model:
     
     # A method that calculates the average quueing time for the nurse.  We can
     # call this at the end of each run
+    """3"""
     def calculate_mean_q_time_nurse(self):
         self.mean_q_time_nurse = self.results_df["Q_Time_Nurse"].mean()
         
     # A method to write run results to file.  Here, we write the run number
     # against the the calculated mean queuing time for the nurse across
     # patients in the run.  Again, we can call this at the end of each run
+    """4"""
     def write_run_results(self):
         with open("trial_results.csv", "a") as f:
             writer = csv.writer(f, delimiter=",")
@@ -135,6 +139,7 @@ class GP_Surgery_Model:
         # Run simulation
         self.env.run(until=g.sim_duration)
         
+        """5"""
         # Calculate run results
         self.calculate_mean_q_time_nurse()
         
@@ -142,6 +147,7 @@ class GP_Surgery_Model:
         self.write_run_results()
 
 # Class to store, calculate and manipulate trial results in a Pandas DataFrame
+"""6"""
 class Trial_Results_Calculator:
     # The constructor creates a new Pandas DataFrame, and stores this as an
     # attribute of the class instance
@@ -168,6 +174,7 @@ class Trial_Results_Calculator:
 # the code will start actively doing things.        
 
 # Create a file to store trial results, and write the column headers
+"""7"""
 with open("trial_results.csv", "w") as f:
     writer = csv.writer(f, delimiter=",")
     column_headers = ["Run", "Mean_Q_Time_Nurse"]
@@ -183,6 +190,7 @@ for run in range(g.number_of_runs):
 
 # Once the trial is complete, we'll create an instance of the
 # Trial_Result_Calculator class and run the print_trial_results method
+"""8"""
 my_trial_results_calculator = Trial_Results_Calculator()
 my_trial_results_calculator.print_trial_results()
 
